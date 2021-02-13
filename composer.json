@@ -1,0 +1,50 @@
+{
+  "name": "creativeorange/flare-craft",
+  "description": "Flare bug tracking for Craft CMS",
+  "version": "1.0.0",
+  "type": "craft-plugin",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "craft-plugin",
+    "flare",
+    "flareapp"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Creativeorange",
+      "homepage": "https://www.creativeorange.nl"
+    }
+  ],
+  "support": {
+    "email": "support@creativeorange.nl",
+    "issues": "https://github.com/creativeorange/flare-craft/issues?state=open",
+    "source": "https://github.com/creativeorange/flare-craft",
+    "docs": "https://github.com/creativeorange/flare-craft/blob/main/README.md"
+  },
+  "require": {
+    "craftcms/cms": "^3.1.0",
+    "facade/flare-client-php": "^1.3.7",
+    "yiisoft/yii2": "^2.0.38"
+  },
+  "autoload": {
+    "psr-4": {
+      "creativeorange\\craft\\flare\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "Flare",
+    "handle": "flare",
+    "schemaVersion": "1.0.0",
+    "hasCpSettings": true,
+    "hasCpSection": false,
+    "changelogUrl": "https://raw.githubusercontent.com/creativeorange/flare-craft/main/CHANGELOG.md",
+    "components": {
+      "flare": "creativeorange\\craft\\flare\\services\\FlareService",
+      "report": "creativeorange\\craft\\flare\\services\\ReportService"
+    },
+    "class": "creativeorange\\craft\\flare\\Flare"
+  }
+}

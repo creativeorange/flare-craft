@@ -1,0 +1,40 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.lightswitchField({
+    label: 'Enabled',
+    instructions: 'Enable exception logging',
+    id: 'enabled',
+    name: 'enabled',
+    on: settings['enabled']}) }}
+
+{{ forms.autosuggestField({
+    label: 'API key',
+    instructions: 'You can find the API key immediately after creating a new project from your Flare dashboard, or later on your project’s settings page.',
+    suggestEnvVars: true,
+    id: 'key',
+    name: 'key',
+    value: settings['key']}) }}
+
+{% set ignoredExceptions = settings.getIgnoredExceptions() %}
+
+{{ forms.editableTableField({
+    label: 'Ignore exceptions',
+    instructions: 'Ignore certain exceptions by specifying the fulle namespaced class. (i.e. \\yii\\web\\NotFoundHttpException)',
+    id: 'ignoredExceptions',
+    name: 'ignoredExceptions',
+    cols: {
+        label: {
+            type: 'singleline',
+            heading: 'Label',
+            code: true
+        },
+        class: {
+            type: 'singleline',
+            heading: 'Class',
+            code: true
+        }
+    },
+    rows: ignoredExceptions
+}) }}
