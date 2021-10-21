@@ -1,7 +1,6 @@
 {
   "name": "creativeorange/flare-craft",
   "description": "Flare bug tracking for Craft CMS",
-  "version": "1.0.1",
   "type": "craft-plugin",
   "keywords": [
     "craft",
