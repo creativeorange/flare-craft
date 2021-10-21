@@ -21,7 +21,7 @@ class Settings extends Model
     /**
      * @var array
      */
-    public $ingoredExceptions;
+    public $ignoredExceptions;
 
     /**
      * @inheritdoc
@@ -53,18 +53,18 @@ class Settings extends Model
 
     public function getIgnoredExceptions()
     {
-        if (!is_array($this->ingoredExceptions)) {
+        if (!is_array($this->ignoredExceptions)) {
             return [];
         }
 
-        $ingoredExceptions = array_map(function($row) {
+        $ignoredExceptions = array_map(function ($row) {
             if (isset($row['class']) && \is_callable($row['class'])) {
                 $row['class'] = 'Advanced check set through config file';
             }
 
             return $row;
-        }, $this->ingoredExceptions);
+        }, $this->ignoredExceptions);
 
-        return array_filter($ingoredExceptions);
+        return array_filter($ignoredExceptions);
     }
 }

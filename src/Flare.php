@@ -57,8 +57,8 @@ class Flare extends Plugin
             function (ExceptionEvent $event) {
                 $settings = $this->getSettings();
 
-                if (is_array($settings->ingoredExceptions)) {
-                    foreach ($settings->ingoredExceptions as $config) {
+                if (is_array($settings->ignoredExceptions)) {
+                    foreach ($settings->ignoredExceptions as $config) {
                         if (isset($config['class'])) {
                             if (is_callable($config['class'])) {
                                 $result = $config['class']($event->exception);
