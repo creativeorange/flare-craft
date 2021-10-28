@@ -52,29 +52,10 @@ class Flare extends Plugin
 
 
         Event::on(
-            ErrorHandler::className(),
+            ErrorHandler::class,
             ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION,
             function (ExceptionEvent $event) {
-                $settings = $this->getSettings();
-
-                if (is_array($settings->ignoredExceptions)) {
-                    foreach ($settings->ignoredExceptions as $config) {
-                        if (isset($config['class'])) {
-                            if (is_callable($config['class'])) {
-                                $result = $config['class']($event->exception);
-                                if (!$result) {
-                                    return;
-                                }
-                            } else {
-                                if ($event->exception instanceof $config['class']) {
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                Flare::getInstance()->flare->handleException($event->exception);
+                Flare::getInstance()->flare->handleException($event->exception, $this->getSettings()->ignoredExceptions ?? []);
             }
         );
 

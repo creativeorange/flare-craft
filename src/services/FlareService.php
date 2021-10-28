@@ -7,7 +7,6 @@ use craft\base\Component;
 use creativeorange\craft\flare\base\middleware\AddApplicationInformation;
 use creativeorange\craft\flare\base\middleware\AddEnvironmentInformation;
 use creativeorange\craft\flare\base\middleware\AddPluginInformation;
-use creativeorange\craft\flare\base\middleware\AddQueries;
 use creativeorange\craft\flare\Flare;
 use Facade\FlareClient\Flare as FlareClient;
 
@@ -15,9 +14,10 @@ class FlareService extends Component
 {
     /**
      * @param $exception
+     * @param array $ignoredExceptions
      * @return bool|void
      */
-    public function handleException($exception)
+    public function handleException($exception, $ignoredExceptions = [])
     {
         $flare = FlareClient::register(Flare::$plugin->getSettings()->getKey());
         $flare->stage(Craft::$app->env);
@@ -30,10 +30,18 @@ class FlareService extends Component
             ]);
         }
 
+        $flare->filterExceptionsUsing(function(\Throwable $exception) use($ignoredExceptions) {
+            foreach($ignoredExceptions as $ignoredException) {
+                if ($exception instanceof $ignoredException['class']) {
+                    return false;
+                }
+            }
+            return false;
+        });
+
         $flare->registerMiddleware(new AddApplicationInformation);
         $flare->registerMiddleware(new AddEnvironmentInformation);
         $flare->registerMiddleware(new AddPluginInformation);
-//        $flare->registerMiddleware(new AddQueries);
 
         $flare->handleException($exception);
     }
