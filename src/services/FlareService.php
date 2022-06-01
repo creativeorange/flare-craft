@@ -22,7 +22,7 @@ class FlareService extends Component
         $flare = FlareClient::register(Flare::$plugin->getSettings()->getKey());
         $flare->stage(Craft::$app->env);
 
-        if ( $user = Craft::$app->getUser()->getIdentity() ) {
+        if ($user = Craft::$app->getUser()->getIdentity()) {
             $flare->group('user', [
                 'id'    => $user->id,
                 'name'  => $user->getName(),
@@ -30,9 +30,9 @@ class FlareService extends Component
             ]);
         }
 
-        $flare->filterExceptionsUsing(function(\Throwable $exception) use($ignoredExceptions) {
-            foreach($ignoredExceptions as $ignoredException) {
-                if ($exception instanceof $ignoredException['class']) {
+        $flare->filterExceptionsUsing(function (\Throwable $exception) use ($ignoredExceptions) {
+            foreach ($ignoredExceptions as $ignoredException) {
+                if ($exception instanceof $ignoredException['class'] || $exception->getPrevious() instanceof $ignoredException['class']) {
                     return false;
                 }
             }
