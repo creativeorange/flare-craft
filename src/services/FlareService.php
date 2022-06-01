@@ -36,7 +36,7 @@ class FlareService extends Component
                     return false;
                 }
             }
-            return false;
+            return true;
         });
 
         $flare->registerMiddleware(new AddApplicationInformation);
